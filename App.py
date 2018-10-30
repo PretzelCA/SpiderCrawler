@@ -184,9 +184,9 @@ class Application(Frame):
 
     def OnDoubleClick(self, event):
         try:
-            webbrowser.get("windows-default").open("www.steamcommunity.com/profiles/" + str(self.graph.tree.item(self.graph.tree.selection())["values"][0]))
+            webbrowser.get("windows-default").open("https://steamidfinder.com/lookup/" + str(self.graph.tree.item(self.graph.tree.selection())["values"][0]))
         except:
-            self.popup()
+            self.popup_error("You must select a found user first")
 
     def updateGUI(self):
         fcount = str(SteamySpider.fcount)
@@ -225,24 +225,32 @@ class Application(Frame):
 
     def steam(self): 
         try:
-            webbrowser.get("windows-default").open("www.steamcommunity.com/profiles/" + str(self.graph.tree.item(self.graph.tree.selection())["values"][0]))
+            webbrowser.get("windows-default").open("https://steamidfinder.com/lookup/" + str(self.graph.tree.item(self.graph.tree.selection())["values"][0]))
         except:
-            self.popup()
+            self.popup_error("You must select a found user first")
 
     def backpack(self): 
         try:
             webbrowser.get("windows-default").open(self.bpurl.get() + str(self.graph.tree.item(self.graph.tree.selection())["values"][0]))
         except:
-            self.popup()
+            self.popup_error("You must select a found user first")
 
     def clear(self):
         for i in self.graph.tree.get_children():
             self.graph.tree.delete(i)
 
-    def popup(self):
+    def popup_error(self, error):
         top = Toplevel()
         top.title("Error")
-        msg = Label(top, text="You must select a found user first")
+        msg = Label(top, text=error)
+        msg.pack()
+        button = Button(top, text="Dismiss", command=top.destroy)
+        button.pack()
+
+    def popup_warn(self, warn):
+        top = Toplevel()
+        top.title("Error")
+        msg = Label(top, text=warn)
         msg.pack()
         button = Button(top, text="Dismiss", command=top.destroy)
         button.pack()
@@ -271,6 +279,7 @@ class Application(Frame):
         T.config(cursor="arrow")
         T.insert(END, "link\n", "a")
         T.insert(END, "Input when program starts, or click the API key button\nEnter a steam id(after http://steamcommunity.com/id/ or http://steamcommunity.com/profiles/)\nPush start\n")
+        T.insert(END, "After you get an ID, use https://steamidfinder.com/ or another site to get a working link to see their profile.\n")
         T.insert(END, "Settings\n", 'big')
         T.insert(END, "Clear - clears the log of found users\nReload item schema - forces item schema to update (do it if tf2 adds new items)\n")
         T.insert(END, "Start with fresh id - if unchecked, program will attempt to use saved data, \n                        otherwise it will start fresh with the id in the entry box\n")

@@ -144,7 +144,7 @@ def backpack(id, gen, bud, bill, unu, maxs, bmoc, salv, traded, f2p, untradable)
             elif (item['defindex'] == 5068 and salv):
                 pass
             else:
-                pass
+                continue
             if traded and not (item['id'] == item['original_id']):
                 continue
             if got != '':
