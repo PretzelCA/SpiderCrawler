@@ -1,0 +1,14 @@
+  name: steamyspider
+  version: '2018.10.30-1751'
+  summary: A TF2 steam inventory crawler # 79 char long summary
+  description: |
+    An open source TF2 steam inventory crawler using the steam API and python
+
+  grade: stable
+  confinement: devmode # use 'strict' once you have the right plugs and slots
+
+  parts:
+    my-part:
+      # See 'snapcraft plugins'
+      plugin: python
+  
