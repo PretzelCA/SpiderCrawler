@@ -1,6 +1,5 @@
 import urllib.request as urllib2
 import xml.etree.ElementTree as ET
-import requests
 from xml.dom.minidom import parseString
 import pickle
 import App
@@ -119,18 +118,15 @@ def backpack(id, gen, bud, bill, unu, maxs, bmoc, salv, traded, f2p, untradable)
     try:
         url = 'http://api.steampowered.com/IEconItems_{}/GetPlayerItems/v1/?key={}&steamid={}&format=json'.format(gameid, API, id)
         data = json.loads(((urllib2.urlopen(url)).read()).decode("utf8"))
-        print(data)
     except Exception as e:
         return ''
     got = ''
     if 'num_backpack_slots' in data['result']:
-        print("h2")
         if (data['result']['num_backpack_slots'] < 150) and f2p:
-            print(got)
+            print("Backpack slots: ",got)
             return got
     if 'items' in data['result']:
         for item in data['result']['items']:
-            print("h")
             if ('flag_cannot_trade' in item) and untradable:
                 continue
             elif (item['quality'] == 5 and item['defindex'] not in [267, 266] and unu):
@@ -157,14 +153,11 @@ def backpack(id, gen, bud, bill, unu, maxs, bmoc, salv, traded, f2p, untradable)
                 got+= 'Unusual '
             try:    
                 got += itemschema[int(item['defindex'])]
-                print(got)
             except:
                 got == "AMINISHERE"
         if got != '':
             found.append(id)
-            fcount+= 1
-            print(got)
-    print(got)        
+            fcount+= 1    
     return got
 
 def files(): #save lists to files

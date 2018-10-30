@@ -1,7 +1,7 @@
-SpiderCrawler
+Steamy Spider
 =============
 
-**CURRENTLY BROKEN**
+**W.I.P BUT WORKING**
 
 A crawler for steam, checking for valuable items in user's inventories created in Python 3.
 

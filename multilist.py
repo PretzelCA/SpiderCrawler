@@ -2,7 +2,7 @@ try:
     import tkinter.ttk as ttk
 except:
     import Tkinter.ttk as ttk
-import SpiderCrawler
+import SteamySpider
 
 class McListBox(object):
     def __init__(self, frame):

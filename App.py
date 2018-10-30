@@ -3,7 +3,7 @@ try:
     from tkinter import *
 except ImportError:
     from Tkinter import *
-import SpiderCrawler
+import SteamySpider
 import multilist
 import webbrowser
 import json
@@ -16,8 +16,7 @@ class Application(Frame):
         Frame.__init__(self,master)
 
         #gives program icon and title
-        #root.wm_iconbitmap(__location__+'/data/spider.ico')
-        root.wm_title("Spider Crawler 1.2")
+        root.wm_title("Steamy Spider")
 
         #gui is divided into 3 parts, top middle and bottom
         topframe = Frame(root)
@@ -131,7 +130,7 @@ class Application(Frame):
         self.lbl = Label(topframe, text="0/0 found")
         self.lbl.grid(row=1, column=8, padx = (0,25)) 
 
-        Label(botframe, text="Created by Akenne", font=("Times New Roman", 8)).grid(row=3, column=0, sticky = W)
+        Label(botframe, text="Worked on by PretzelCA | Originally created by Akenne", font=("Times New Roman", 8)).grid(row=3, column=0, sticky = W)
 
         Label(botframe, text="Total Hours:").grid(row = 0, column = 4, sticky = W)
         Entry(botframe,textvariable=self.minhours, width = 4).grid(row = 0, column = 5, sticky = E)
@@ -190,8 +189,8 @@ class Application(Frame):
             self.popup()
 
     def updateGUI(self):
-        fcount = str(SpiderCrawler.fcount)
-        count = str(SpiderCrawler.count)
+        fcount = str(SteamySpider.fcount)
+        count = str(SteamySpider.count)
         msg = fcount + "/" + count + " found"
         self.lbl["text"] = msg
 
@@ -199,11 +198,11 @@ class Application(Frame):
         t1 = threading.Thread(target = self.threads)
         t1.daemon = True
         t1.start()
-        SpiderCrawler.run = True
+        SteamySpider.run = True
         self.b.configure(text = "STOP", command=self.stop)
 
     def stop(self):
-        SpiderCrawler.run = False
+        SteamySpider.run = False
         self.b.configure(text = "START", command=self.start)
 
     def threads(self):
@@ -211,9 +210,9 @@ class Application(Frame):
             self.box.delete(0, END)
             self.box.config(fg = "black")
             self.clicked = True
-        SpiderCrawler.API = self.apikey.get()
-        SpiderCrawler.start(self.SchemaUpdate.get(), self.reset.get(), self.entryid.get())
-        SpiderCrawler.go(self.thread.get(), self, self.genuine.get(), self.buds.get(), self.bills.get(), self.unusual.get(), 
+        SteamySpider.API = self.apikey.get()
+        SteamySpider.start(self.SchemaUpdate.get(), self.reset.get(), self.entryid.get())
+        SteamySpider.go(self.thread.get(), self, self.genuine.get(), self.buds.get(), self.bills.get(), self.unusual.get(), 
             self.maxs.get(), self.bmoc.get(), self.salvage.get(), self.maxhours.get(), self.traded.get(), self.f2p.get(), 
             self.untradable.get(), self.minrecenthours.get(), self.minhours.get(), self.maxrecenthours.get(), 
             self.online.get(), self.onlinedays.get(), self.offline.get())
@@ -277,7 +276,8 @@ class Application(Frame):
         T.insert(END, "Start with fresh id - if unchecked, program will attempt to use saved data, \n                        otherwise it will start fresh with the id in the entry box\n")
         T.insert(END, "Threads - the amount of users being checked at the same time (depends on computer speed)\n")
         T.insert(END, "Steam - highlight a found user and click to open their steam profile\n")
-        T.insert(END, "GotoBP - highlight a found user and click to open their backpack\n")
+        T.insert(END, "GotoBP - highlight a found user and click to open their backpack\n\n\n")
+        T.insert(END, "Special thanks to Akenne who orginally made this program 4 years\n")
         T.pack()
 
     def api(self):
