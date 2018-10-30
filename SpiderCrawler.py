@@ -148,15 +148,18 @@ def backpack(id, gen, bud, bill, unu, maxs, bmoc, salv, traded, f2p, untradable)
             elif (item['defindex'] == 5068 and salv):
                 pass
             else:
-                continue
+                pass
             if traded and not (item['id'] == item['original_id']):
                 continue
             if got != '':
                 got+= ', '
             if item['quality'] == 5:
                 got+= 'Unusual '
-            got += itemschema[int(item['defindex'])]
-            print(got)
+            try:    
+                got += itemschema[int(item['defindex'])]
+                print(got)
+            except:
+                got == "AMINISHERE"
         if got != '':
             found.append(id)
             fcount+= 1
