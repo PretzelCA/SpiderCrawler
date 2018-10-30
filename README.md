@@ -1,8 +1,12 @@
 SpiderCrawler
 =============
 
-Crawls steam profiles for valuable items in team fortress 2(currently looks for unusual items depending on hours played)
+**CURRENTLY BROKEN**
 
-Starts with one person and then checks their friends, and their friends, etc
+A crawler for steam, checking for valuable items in user's inventories created in Python 3.
 
-Saves found users to file found
+Works on any platform that allows Tkinter and Python 3.
+
+Starts with one person and then crawls using their friends and saves all IDs to a file.
+
+REQUIRES: [Steam Dev Key](https://steamcommunity.com/dev/apikey)
