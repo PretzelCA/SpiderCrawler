@@ -11,3 +11,7 @@
     steamyspider:
       plugin: python
       source: https://github.com/PretzelCA/SteamySpider.git
+  apps:
+    steamyspider:
+      command: steamyspider.py  
+      

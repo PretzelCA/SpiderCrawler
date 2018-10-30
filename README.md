@@ -3,6 +3,8 @@ Steamy Spider
 (Version 2018.10.30-1751)
 **W.I.P BUT WORKING**
 
+[![Snap Status](https://build.snapcraft.io/badge/PretzelCA/SteamySpider.svg)](https://build.snapcraft.io/user/PretzelCA/SteamySpider)
+
 A crawler for steam, checking for valuable items in user's inventories created in Python 3.
 
 Works on any platform that allows Tkinter and Python 3.
