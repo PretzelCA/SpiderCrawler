@@ -9,9 +9,9 @@
 
   parts:
     steamyspider:
-      plugin: python
-      source: https://github.com/PretzelCA/SteamySpider.git
+      stage-packages: [libc6, python3]
+      plugin: dump
+      source: https://github.com/PretzelCA/SteamySpider/releases/download/$SNAPCRAFT_PROJECT_VERSION/SteamySpiderLinux.tar.xz
   apps:
     steamyspider:
-      command: steamyspider.py  
-      
+      command: SteamySpider
