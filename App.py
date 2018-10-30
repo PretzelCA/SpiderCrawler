@@ -10,13 +10,15 @@ import json
 import os
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
+appVersion = "2018.10.30-1751"
+
 class Application(Frame):
     def __init__(self,master=None):
         root = Tk()
         Frame.__init__(self,master)
 
         #gives program icon and title
-        root.wm_title("Steamy Spider")
+        root.wm_title("Steamy Spider " + appVersion)
 
         #gui is divided into 3 parts, top middle and bottom
         topframe = Frame(root)
@@ -130,7 +132,7 @@ class Application(Frame):
         self.lbl = Label(topframe, text="0/0 found")
         self.lbl.grid(row=1, column=8, padx = (0,25)) 
 
-        Label(botframe, text="Worked on by PretzelCA | Originally created by Akenne", font=("Times New Roman", 8)).grid(row=3, column=0, sticky = W)
+        Label(botframe, text="Worked on by PretzelCA | Originally created by Akenne | Version: "+appVersion, font=("Times New Roman", 8)).grid(row=3, column=0, sticky = W)
 
         Label(botframe, text="Total Hours:").grid(row = 0, column = 4, sticky = W)
         Entry(botframe,textvariable=self.minhours, width = 4).grid(row = 0, column = 5, sticky = E)
