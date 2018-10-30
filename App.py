@@ -7,6 +7,8 @@ import SpiderCrawler
 import multilist
 import webbrowser
 import json
+import os
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 class Application(Frame):
     def __init__(self,master=None):
@@ -14,7 +16,7 @@ class Application(Frame):
         Frame.__init__(self,master)
 
         #gives program icon and title
-        root.wm_iconbitmap('.\data\spider.ico')
+        #root.wm_iconbitmap(__location__+'/data/spider.ico')
         root.wm_title("Spider Crawler 1.2")
 
         #gui is divided into 3 parts, top middle and bottom

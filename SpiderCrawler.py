@@ -21,13 +21,13 @@ ecount = 0
 def schema(tf):#get item schema to find item names
     global API
     if tf:
-        ctypes.windll.user32.MessageBoxW(0, 'Updating schema, please wait', "Hold on", 0)
+        print('Updating schema, please wait', "Hold on")
         itemschema = {}
         try:
-            url = 'http://api.steampowered.com/IEconItems_440/GetSchema/v0001/?key={}&format=json'.format(API)
+            url = 'https://api.steampowered.com/IEconItems_440/GetSchemaItems/v1/?key={}&format=json'.format(API)
             data = json.loads(((urllib2.urlopen(url)).read()).decode("utf8"))
         except:
-            ctypes.windll.user32.MessageBoxW(0, 'Steam is acting slow, please wait', "Hold on", 0)
+            print('Steam is acting slow, please wait', "Hold on")
             return schema(tf)
         for i in data["result"]["items"]:
             print(i['name'])
@@ -38,7 +38,7 @@ def schema(tf):#get item schema to find item names
         itemschema[161] = 'Big Kill'
         itemschema[162] = 'Max\'s head'
         pickle.dump(itemschema, open(".\data\save.p", "wb"))
-        ctypes.windll.user32.MessageBoxW(0, 'Schema updated', "Done", 0)
+        print('Schema updated', "Done")
         return itemschema
     else:
         try:
@@ -72,14 +72,14 @@ def reset(tf): #resets text files that contain steam ids
 def getid(vanity): #converts vanity url to steam id
     global API
     try:
-        url = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={}&vanityurl={}&format=json'.format(API, vanity)
+        url = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key={}&vanityurl={}&format=json'.format(API, vanity)
         data = json.loads(((urllib2.urlopen(url)).read()).decode("utf8"))
         if('steamid' not in data["response"]):
-            ctypes.windll.user32.MessageBoxW(0, 'Please enter a correct steamid or vanityurl', "Error", 0)
+            print('Please enter a correct steamid or vanityurl', "Error")
             return "0"
         return data['response']['steamid']
     except:
-        ctypes.windll.user32.MessageBoxW(0, 'Steam is acting slow, please wait', "Hold on", 0)
+        print('Steam is acting slow, please wait', "Hold on")
         return getid(vanity)
 
 def getfriend(id): #get user ids of friends
@@ -87,7 +87,7 @@ def getfriend(id): #get user ids of friends
     global API
     count = 0
     try:
-        url = 'http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key={}&steamid={}&relationship=friend&format=json'.format(API, id)
+        url = 'http://api.steampowered.com/ISteamUser/GetFriendList/v1/?key={}&steamid={}&relationship=friend&format=json'.format(API, id)
         data = json.loads(((urllib2.urlopen(url)).read()).decode("utf8"))
         for i in data['friendslist']['friends']:
             count += 1
@@ -101,7 +101,7 @@ def getfriend(id): #get user ids of friends
 def hours(id): #find steam hours
     global API, gameid, ecount, future
     try:
-        url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={}&format=json&input_json={{"appids_filter":[{}],"include_played_free_games":1,"steamid":{}}}'.format(API, gameid, id)
+        url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key={}&format=json&input_json={{"appids_filter":[{}],"include_played_free_games":1,"steamid":{}}}'.format(API, gameid, id)
         data = json.loads(((urllib2.urlopen(url)).read()).decode("utf8"))
         hours = ((data['response']['games'][0]['playtime_forever'])/60)
         try:
@@ -117,16 +117,20 @@ def hours(id): #find steam hours
 def backpack(id, gen, bud, bill, unu, maxs, bmoc, salv, traded, f2p, untradable): # check backpack
     global API, gameid, found, fcount, run, ecount, itemschema
     try:
-        url = 'http://api.steampowered.com/IEconItems_{}/GetPlayerItems/v0001/?key={}&steamid={}&format=json'.format(gameid, API, id)
+        url = 'http://api.steampowered.com/IEconItems_{}/GetPlayerItems/v1/?key={}&steamid={}&format=json'.format(gameid, API, id)
         data = json.loads(((urllib2.urlopen(url)).read()).decode("utf8"))
+        print(data)
     except Exception as e:
         return ''
     got = ''
     if 'num_backpack_slots' in data['result']:
+        print("h2")
         if (data['result']['num_backpack_slots'] < 150) and f2p:
+            print(got)
             return got
     if 'items' in data['result']:
         for item in data['result']['items']:
+            print("h")
             if ('flag_cannot_trade' in item) and untradable:
                 continue
             elif (item['quality'] == 5 and item['defindex'] not in [267, 266] and unu):
@@ -152,9 +156,12 @@ def backpack(id, gen, bud, bill, unu, maxs, bmoc, salv, traded, f2p, untradable)
             if item['quality'] == 5:
                 got+= 'Unusual '
             got += itemschema[int(item['defindex'])]
+            print(got)
         if got != '':
             found.append(id)
             fcount+= 1
+            print(got)
+    print(got)        
     return got
 
 def files(): #save lists to files
@@ -172,7 +179,7 @@ def online(id, online, onlinedays, offline):
     a = False
     b = False
     try:
-        url = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={}&steamids={}&format=json'.format(API, id)
+        url = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={}&steamids={}&format=json'.format(API, id)
         data = json.loads(((urllib2.urlopen(url)).read()).decode("utf8"))
     except Exception as e:
         return a, b
@@ -220,7 +227,7 @@ def hunt(a, iq, gen, bud, bill, unu, maxs, bmoc, salv, maxhours, traded, f2p, un
             except:
                 pass
         if i == "":
-            ctypes.windll.user32.MessageBoxW(0, 'Please enter an ID', "Error", 0)
+            print('Please enter an ID', "Error")
             run = False
         if run:
             count +=1
